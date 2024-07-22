@@ -27,13 +27,13 @@ struct ReturnRequestView: View {
             } else {
                 VStack(alignment: .leading, spacing: 5) {
                     if let data = viewModel.returnRequest {
-                        Text("ID: \(data.id)")
+                        Text("ID: \(data.id ?? 0)")
                             .font(.system(size: 16, weight: .semibold))
                         
-                        Text("Created At: \(data.createdAt)")
+                        Text("Created At: \(data.createdAt ?? "")")
                             .font(.system(size: 14))
                         
-                        Text("Items: \(data.pharmacy?.id)")
+                        Text("Items: \(data.pharmacy?.id ?? 0)")
                             .font(.system(size: 14))
                         
                         Text("Status: \(data.returnRequestStatusLabel)")

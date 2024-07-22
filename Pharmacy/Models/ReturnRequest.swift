@@ -70,9 +70,8 @@ struct ListReturnData: Codable , Identifiable {
     
 
     let id = UUID()
-
     let returnRequest : ReturnRequestData?
-    
+    let numberOfItems : Int?
 }
 struct ListReturn:Codable {
     

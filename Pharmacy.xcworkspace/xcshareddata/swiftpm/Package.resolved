@@ -1,0 +1,15 @@
+{
+  "originHash" : "0dfc5a57cde1a002e2a76957941b861b69b598ec50162ff0b8803a16c8d4b624",
+  "pins" : [
+    {
+      "identity" : "bottom-sheet",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/weitieda/bottom-sheet",
+      "state" : {
+        "revision" : "6b21007153365235418f3943a960a1f9546592e0",
+        "version" : "1.0.12"
+      }
+    }
+  ],
+  "version" : 3
+}

@@ -2,28 +2,35 @@ import SwiftUI
 
 struct PharmacyRowView: View {
     var pharmacy: Pharmacy
-    
+    @Binding  var showBottomSheet:Bool
+    @EnvironmentObject var viewModel:PharmacyListViewModel
     var body: some View {
-        HStack {
-            ZStack {
-                Image("listicon")
-                    .resizable()
-                    .frame(width: 60, height: 60)
-                    .clipped()
-            }
+        Button {
+        viewModel.selectedParamacy = pharmacy
+        showBottomSheet.toggle()
+        } label: {
             
-            VStack(alignment: .leading, spacing: 5) {
-                Text(pharmacy.doingBusinessAs ?? "")
-                    .font(.system(size: 16, weight: .semibold))
+            HStack {
+                ZStack {
+                    Image("listicon")
+                        .resizable()
+                        .frame(width: 60, height: 60)
+                        .clipped()
+                }
                 
-                Text("Returns: \(pharmacy.numberOfReturns ?? 0)")
-                    .font(.system(size: 14))
-                
-                Text("Enabled: \(pharmacy.enabled == true ? "Yes" : "No")")
-                    .font(.system(size: 14))
-                    .foregroundColor(pharmacy.enabled == true ? .green : .red)
+                VStack(alignment: .leading, spacing: 5) {
+                    Text(pharmacy.doingBusinessAs ?? "")
+                        .font(.system(size: 16, weight: .semibold))
+                    
+                    Text("Returns: \(pharmacy.numberOfReturns ?? 0)")
+                        .font(.system(size: 14))
+                    
+                    Text("Enabled: \(pharmacy.enabled == true ? "Yes" : "No")")
+                        .font(.system(size: 14))
+                        .foregroundColor(pharmacy.enabled == true ? .green : .red)
+                }
+                Spacer()
             }
-           Spacer()
         }
         .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.horizontal)

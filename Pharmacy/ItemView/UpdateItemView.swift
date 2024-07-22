@@ -1,20 +1,21 @@
 //
-//  AddItemView.swift
+//  UpdateItemView.swift
 //  Pharmacy
 //
-//  Created by Rana Mahmoud on 20/07/2024.
+//  Created by Rana Mahmoud on 22/07/2024.
 //
+
 import SwiftUI
 
-struct AddItemView: View {
+struct UpdateItemView: View {
     @ObservedObject var viewModel: ItemViewModel
     @State private var item: Item
     @Binding var showModal: Bool
 
-    init(viewModel: ItemViewModel, item: Item? = nil, showModal: Binding<Bool>) {
+    init(viewModel: ItemViewModel, item: Item, showModal: Binding<Bool>) {
         self.viewModel = viewModel
         self._showModal = showModal
-        self._item = State(initialValue: item ?? Item(id: viewModel.generateRandomID(), createdAt: "", updatedAt: "", ndc: "", description: "", manufacturer: "", packageSize: "", requestType: "", name: "", strength: "", dosage: "", fullQuantity: 0.0, partialQuantity: 0.0, expirationDate: "", status: "", lotNumber: "", expectedReturnValue: 0.0, actualReturnValue: 0.0, gtin14: "", serialNumber: "", controlledSubstanceCode: "", adminComment: ""))
+        self.item = item
     }
 
     var body: some View {
@@ -26,7 +27,7 @@ struct AddItemView: View {
                     Image(systemName: "chevron.left")
                 }
                 Spacer()
-                Text("Add New Item")
+                Text("Return Requests")
                     .font(.system(size: 18, weight: .bold))
                 Spacer()
                 Image(systemName: "chevron.left").opacity(0)
@@ -117,11 +118,9 @@ struct AddItemView: View {
                     HStack {
                         Spacer()
                         Button("Save Item") {
-//                            if let id = viewModel.itemId {
-//                                viewModel.updateItem(itemId: id, updatedItem: item)
-//                            } else {
-                                viewModel.addItem(item: item)
-//                            }
+
+                            viewModel.updateItem(itemId: item.id ?? 0, updatedItem: item)
+
                             showModal.toggle()
                         }
                         .padding()
@@ -144,3 +143,4 @@ struct AddItemView: View {
         }
     }
 }
+

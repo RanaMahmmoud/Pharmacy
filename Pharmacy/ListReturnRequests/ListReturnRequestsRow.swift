@@ -10,17 +10,17 @@ import SwiftUI
 
 struct ListReturnRequestsRow: View {
     var returnRequest: ReturnRequestData
-
+    var itemsNumber: Int
     var body: some View {
         HStack {
             VStack(alignment: .leading, spacing: 5) {
                 Text("ID: \(returnRequest.id ?? 0)")
                     .font(.system(size: 16, weight: .semibold))
                 
-                Text("Created At: \(returnRequest.createdAt)")
+                Text("Created At: \(returnRequest.createdAt ?? 0)")
                     .font(.system(size: 14))
                 
-                Text("Items: \(returnRequest.pharmacy?.doingBusinessAs)")
+                Text("Items: \(itemsNumber)")
                     .font(.system(size: 14))
                 
                 Text("Status: \(returnRequest.returnRequestStatusLabel)")
@@ -29,7 +29,7 @@ struct ListReturnRequestsRow: View {
                 Text("Service Type: \(returnRequest.serviceType)")
                     .font(.system(size: 14))
                 
-                Text("Associated Wholesaler: \(returnRequest.pharmacy?.doingBusinessAs)")
+                Text("Associated Wholesaler: \(returnRequest.pharmacy?.doingBusinessAs ?? "")")
                     .font(.system(size: 14))
             }
             Spacer()

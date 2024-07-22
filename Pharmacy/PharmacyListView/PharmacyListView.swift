@@ -6,17 +6,28 @@
 //
 
 import SwiftUI
+import BottomSheet
 
 struct PharmacyListView: View {
     @ObservedObject var viewModel: PharmacyListViewModel
     @EnvironmentObject var loginViewModel: LoginViewModel
     @State private var showBottomSheet = false
-    @State private var selectedPharmacy: Pharmacy?
     @State private var destination: Destination?
-
+    @State private var isPresentedWholesalerListView: Bool = false
+    @State private var isPresentedListReturnRequestsView: Bool = false
+    @State private var isPresentedReturnRequestView: Bool = false
     var body: some View {
-        NavigationView {
+//        NavigationView {
             VStack {
+                HStack {
+                    Spacer()
+                    
+                    Text("Pharmacies")
+                        .font(.system(size: 18, weight: .bold))
+                    
+                    Spacer()
+                    
+                }.padding(.bottom,25)
                 if viewModel.isLoading {
                     ProgressView("Loading Pharmacies...")
                 } else if !viewModel.errorMessage.isEmpty {
@@ -27,56 +38,53 @@ struct PharmacyListView: View {
                     ScrollView {
                         VStack(spacing: 15) {
                             ForEach(viewModel.pharmacies) { pharmacy in
-                                PharmacyRowView(pharmacy: pharmacy)
+                                PharmacyRowView(pharmacy: pharmacy ,showBottomSheet : $showBottomSheet )
+                                    .environmentObject(viewModel)
                                     .onTapGesture {
-                                        selectedPharmacy = pharmacy
-                                        showBottomSheet.toggle()
+                                        viewModel.selectedParamacy = pharmacy
                                     }
+
                             }
                         }
                         .padding(.horizontal)
-                    }
+                    }.padding(.top,10)
+                }
+            }.bottomSheet(isPresented: $isPresentedReturnRequestView, height: 500) {
+             
+                if(isPresentedReturnRequestView){
+                    PharmacyDetailsView(viewModel: PharmacyDetailsViewModel(), pharmacyId: viewModel.selectedParamacy?.pharmacyId ?? 0 ,authToken: loginViewModel.authToken, showModal: $isPresentedReturnRequestView)
+                    
                 }
             }
-            .navigationTitle("Pharmacies")
-            .sheet(isPresented: $showBottomSheet) {
-                 BottomSheetView(showBottomSheet: $showBottomSheet, pharmacy: $selectedPharmacy, destination: $destination)
-                    .background(Color.black.opacity(0.1).edgesIgnoringSafeArea(.all))
+                
+            .bottomSheet(isPresented: $showBottomSheet, height: 300) {
+                if(showBottomSheet){
+                    BottomSheetView(showBottomSheet: $showBottomSheet, destination: $destination ,isPresentedWholesalerListView: $isPresentedWholesalerListView,isPresentedListReturnRequestsView:$isPresentedListReturnRequestsView, isPresentedReturnRequestView: $isPresentedReturnRequestView)
+                }
 
-            }
-            .background(
-                NavigationLink(
-                    destination: destinationView(),
-                    isActive: Binding<Bool>(
-                        get: { destination != nil },
-                        set: { _ in }
-                    ),
-                    label: { EmptyView() }
-                )
-            )
         }
+        .fullScreenCover(isPresented: $isPresentedWholesalerListView, content: {
+            if let pharmacy = viewModel.selectedParamacy {
+                WholesalerListView(viewModel: WholesalerViewModel(), pharmacyId: pharmacy.pharmacyId ?? 0,showModal: $isPresentedWholesalerListView)
+                    .environmentObject(loginViewModel)
+            }
+        })
+        .fullScreenCover(isPresented: $isPresentedListReturnRequestsView, content: {
+            if let pharmacy = viewModel.selectedParamacy {
+                ListReturnRequestsView(viewModel:ListReturnRequestsViewModel(), pharmacyId: pharmacy.pharmacyId ?? 0, showModal: $isPresentedListReturnRequestsView)
+                    .environmentObject(loginViewModel)
+            }
+           
+        })
+      
         .onAppear {
             viewModel.fetchPharmacies(authToken: loginViewModel.authToken)
         }
+      
+        
     }
     
-    @ViewBuilder
-    private func destinationView() -> some View {
-        if let destination = destination, let pharmacy = selectedPharmacy {
-            switch destination {
-            case .wholesalers:
-                WholesalerListView(viewModel: WholesalerViewModel(), pharmacyId: pharmacy.pharmacyId ?? 0)
-                    .environmentObject(loginViewModel)
-            case .returnRequests:
-             
-               ListReturnRequestsView(viewModel:ListReturnRequestsViewModel(), pharmacyId: pharmacy.pharmacyId ?? 0)
-                   .environmentObject(loginViewModel)
-            }
-        } else {
-            EmptyView()
-        }
-    }
-    
+  
     enum Destination {
         case wholesalers
         case returnRequests

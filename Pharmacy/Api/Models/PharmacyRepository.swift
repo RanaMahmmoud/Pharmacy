@@ -123,11 +123,11 @@ class PharmacyRepository {
        }
 
        func createReturnRequest(authToken: String, pharmacyId: Int, serviceType: String, wholesalerId: Int) -> Promise<ReturnRequest> {
-           return Promise { seal in
+           return Promise() { seal in
                let headers: HTTPHeaders = ["Authorization": "Bearer \(authToken)"]
                let parameters: [String: Any] = ["serviceType": serviceType, "wholesalerId": wholesalerId]
                AF.request("\(baseURL)pharmacies/\(pharmacyId)/returnrequests", method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: headers)
-                   .response { response in
+                   .responseData { response in
                        switch response.result {
                        case .success:
                            if let data = response.data {
@@ -152,16 +152,19 @@ class PharmacyRepository {
        }
 
     func getListReturnRequests(authToken: String, pharmacyId: Int) -> Promise<ListReturn> {
-        return Promise { seal in
+        print("Pharamacy-Log: getListReturnRequests: reponseJSON: success \(pharmacyId) token: \(authToken )")
+        return Promise() { seal in
             let headers: HTTPHeaders = ["Authorization": "Bearer \(authToken)"]
             AF.request("\(baseURL)pharmacies/\(pharmacyId)/returnrequests", method: .get, parameters: nil, encoding: JSONEncoding.default, headers: headers)
-                .response { response in
+                .responseData { response in
                     switch response.result {
                     case .success:
+                        print("\(authToken) :: \(pharmacyId)")
+
                         if let data = response.data {
                             do {
                                 print("\(response.response?.statusCode)")
-                                let reponseJSON = try JSONDecoder().decode(ListReturn.self, from: response.data!)
+                                let reponseJSON = try JSONDecoder().decode(ListReturn.self, from: data)
                                 seal.fulfill(reponseJSON)
                                 print("Pharamacy-Log: getListReturnRequests: reponseJSON: success")
                             } catch (let error) {
@@ -173,16 +176,47 @@ class PharmacyRepository {
                     
                         print("Pharamacy-Log: getListReturnRequests: Error = \(error.localizedDescription)")
                         seal.reject(error)
+                        
                     }
                 }
+            
         }
     }
+    func getPharamacyDetailsRequests(authToken: String, pharmacyId: Int) -> Promise<PharmacyResponse> {
+        print("Pharamacy-Log: getPharamacyDetailsRequests: reponseJSON: pharmacyId \(pharmacyId) :: \(authToken)")
+        return Promise() { seal in
+            let headers: HTTPHeaders = ["Authorization": "Bearer \(authToken)"]
+            AF.request("\(baseURL)pharmacies/\(pharmacyId)/full", method: .get, headers: headers)
+                .responseData { response in
+                    switch response.result {
+                    case .success:
+                        if let data = response.data {
+                            do {
+                                print("\(response.response?.statusCode)")
+                                let reponseJSON = try JSONDecoder().decode(PharmacyResponse.self, from: data)
+
+                                seal.fulfill(reponseJSON)
+                                print("Pharamacy-Log: getPharamacyDetailsRequests: reponseJSON: success \(reponseJSON)")
+
+                            } catch (let error) {
+                                print("Pharamacy-Log: getPharamacyDetailsRequests: Error reponseJSON \(error)")
+                                seal.reject(error)
+                            }
+                        }
+                    case .failure(let error):
+                    
+                        print("Pharamacy-Log: getPharamacyDetailsRequests: Error = \(error.localizedDescription)")
+                        seal.reject(error)
+                    }
+                }        }
+    }
+
     func getReturnRequests(authToken: String, pharmacyId: Int , requestId : Int) -> Promise<ReturnRequest> {
         print("Pharamacy-Log: getReturnRequests")
-        return Promise { seal in
+        return Promise() { seal in
             let headers: HTTPHeaders = ["Authorization": "Bearer \(authToken)"]
             AF.request("\(baseURL)pharmacies/\(pharmacyId)/returnrequests/\(requestId)", method: .get, headers: headers)
-                .response { response in
+                .responseData { response in
                     switch response.result {
                     case .success:
                         if let data = response.data {
@@ -206,23 +240,57 @@ class PharmacyRepository {
                 }        }
     }
 
-    func addItem(authToken: String, item: Item, pharmacyId: String, returnRequestId: String) -> Promise<Item> {
-        return Promise { seal in
+
+    func getItems(authToken: String, pharmacyId: Int, returnRequestId: Int) -> Promise<[Item]> {
+        return Promise() { seal in
+            let headers: HTTPHeaders = ["Authorization": "Bearer \(authToken)"]
+            AF.request("\(baseURL)pharmacies/\(pharmacyId)/returnrequests/\(returnRequestId)/items", method: .get, headers: headers)
+                 .responseData { response in
+                    switch response.result {
+                    case .success:
+                        if let data = response.data {
+                            do {
+                                print("\(response.response?.statusCode)")
+                                let reponseJSON = try JSONDecoder().decode([Item].self, from: data)
+
+                                seal.fulfill(reponseJSON)
+                                print("Pharamacy-Log: getItems: reponseJSON: success \(reponseJSON)")
+
+                            } catch (let error) {
+                                print("Pharamacy-Log: getItems: Error reponseJSON \(error)")
+                                seal.reject(error)
+                            }
+                        }
+                    case .failure(let error):
+                    
+                        print("Pharamacy-Log: getItems: Error = \(error.localizedDescription)")
+                        seal.reject(error)
+                    }
+                }    
+           }
+        }
+        
+        
+    func addItem(authToken: String, item: Item, pharmacyId: Int, returnRequestId: Int) -> Promise<Bool> {
+        return Promise() { seal in
             let headers: HTTPHeaders = ["Authorization": "Bearer \(authToken)"]
             let parameters: [String: Any] = [
                 "ndc": item.ndc,
                 "description": item.description,
-                "manufacturer": item.manufacturer,
+                "requestType": item.requestType,
+                "name": item.name,
+                "dosage": item.dosage,
                 "fullQuantity": item.fullQuantity,
                 "partialQuantity": item.partialQuantity,
                 "expirationDate": item.expirationDate,
+                "status": item.status,
                 "lotNumber": item.lotNumber
             ]
-            AF.request("\(baseURL)rxmax/pharmacies/\(pharmacyId)/returnrequests/\(returnRequestId)/items", method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: headers)
-                .responseDecodable(of: Item.self) { response in
+            AF.request("\(baseURL)/pharmacies/\(pharmacyId)/returnrequests/\(returnRequestId)/items", method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: headers)
+                .responseData { response in
                     switch response.result {
                     case .success(let data):
-                        seal.fulfill(data)
+                        seal.fulfill(true)
                     case .failure(let error):
                         seal.reject(error)
                     }
@@ -230,38 +298,27 @@ class PharmacyRepository {
         }
     }
 
-    func getItems(authToken: String, pharmacyId: String, returnRequestId: String) -> Promise<[Item]> {
-        return Promise { seal in
-            let headers: HTTPHeaders = ["Authorization": "Bearer \(authToken)"]
-            AF.request("\(baseURL)rxmax/pharmacies/\(pharmacyId)/returnrequests/\(returnRequestId)/items", method: .get, headers: headers)
-                .responseDecodable(of: [Item].self) { response in
-                    switch response.result {
-                    case .success(let data):
-                        seal.fulfill(data)
-                    case .failure(let error):
-                        seal.reject(error)
-                    }
-                }
-        }
-    }
 
-    func updateItem(authToken: String, pharmacyId: String, returnRequestId: String, itemId: String, updatedItem: Item) -> Promise<Item> {
-        return Promise { seal in
+    func updateItem(authToken: String, pharmacyId: Int, returnRequestId: Int, itemId: Int, updatedItem: Item) -> Promise<Bool> {
+        return Promise() { seal in
             let headers: HTTPHeaders = ["Authorization": "Bearer \(authToken)"]
             let parameters: [String: Any] = [
                 "ndc": updatedItem.ndc,
                 "description": updatedItem.description,
-                "manufacturer": updatedItem.manufacturer,
+                "requestType": updatedItem.requestType,
+                "name": updatedItem.name,
+                "dosage": updatedItem.dosage,
                 "fullQuantity": updatedItem.fullQuantity,
                 "partialQuantity": updatedItem.partialQuantity,
                 "expirationDate": updatedItem.expirationDate,
+                "status": updatedItem.status,
                 "lotNumber": updatedItem.lotNumber
             ]
             AF.request("\(baseURL)pharmacies/\(pharmacyId)/returnrequests/\(returnRequestId)/items/\(itemId)", method: .put, parameters: parameters, encoding: JSONEncoding.default, headers: headers)
-                .responseDecodable(of: Item.self) { response in
+                .responseData { response in
                     switch response.result {
                     case .success(let data):
-                        seal.fulfill(data)
+                        seal.fulfill(true)
                     case .failure(let error):
                         seal.reject(error)
                     }
@@ -269,8 +326,8 @@ class PharmacyRepository {
         }
     }
 
-    func deleteItem(authToken: String, pharmacyId: String, returnRequestId: String, itemId: String) -> Promise<Bool> {
-        return Promise { seal in
+    func deleteItem(authToken: String, pharmacyId: Int, returnRequestId: Int, itemId: Int) -> Promise<Bool> {
+        return Promise() { seal in
             let headers: HTTPHeaders = ["Authorization": "Bearer \(authToken)"]
             AF.request("\(baseURL)pharmacies/\(pharmacyId)/returnrequests/\(returnRequestId)/items/\(itemId)", method: .delete, headers: headers)
                 .response { response in

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C40A0CE32C4D21F500D65065 /* BottomSheet in Frameworks */ = {isa = PBXBuildFile; productRef = C40A0CE22C4D21F500D65065 /* BottomSheet */; };
 		C4B1E9082C4BF59B00851589 /* Wholesaler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B1E9072C4BF59B00851589 /* Wholesaler.swift */; };
 		C4B1E90A2C4BF9A200851589 /* CreateReturnRequestViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B1E9092C4BF9A200851589 /* CreateReturnRequestViewModel.swift */; };
 		C4B1E90C2C4C01E700851589 /* LoginResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B1E90B2C4C01E700851589 /* LoginResponse.swift */; };
@@ -50,6 +51,14 @@
 		C4C7D7A52C4BBA5E00A532C4 /* ItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C7D7A42C4BBA5E00A532C4 /* ItemView.swift */; };
 		C4C7D7AA2C4BBE1200A532C4 /* PharmacyRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C7D7A92C4BBE1200A532C4 /* PharmacyRepository.swift */; };
 		C4C7D7AC2C4BBE1E00A532C4 /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C7D7AB2C4BBE1E00A532C4 /* APIManager.swift */; };
+		C4DC03442C4D5BAF00E07B13 /* PharmacyDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4DC03432C4D5BAF00E07B13 /* PharmacyDetails.swift */; };
+		C4DC03472C4D5C3600E07B13 /* PharmacyDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4DC03462C4D5C3600E07B13 /* PharmacyDetailsView.swift */; };
+		C4DC03492C4D5C4D00E07B13 /* PharmacyDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4DC03482C4D5C4D00E07B13 /* PharmacyDetailsViewModel.swift */; };
+		C4DC034B2C4D732000E07B13 /* ReturnRequestsBottomSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4DC034A2C4D732000E07B13 /* ReturnRequestsBottomSheetView.swift */; };
+		C4DC034E2C4D7E8900E07B13 /* ItemListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4DC034D2C4D7E8900E07B13 /* ItemListView.swift */; };
+		C4DC03512C4D7E9B00E07B13 /* ItemListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4DC03502C4D7E9B00E07B13 /* ItemListViewModel.swift */; };
+		C4DC03532C4D967C00E07B13 /* BottomItemsSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4DC03522C4D967C00E07B13 /* BottomItemsSheet.swift */; };
+		C4DC03572C4E167600E07B13 /* UpdateItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4DC03562C4E167600E07B13 /* UpdateItemView.swift */; };
 		F4CC495454DFC5D5806E55D7 /* Pods_Pharmacy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3AC63158A8F0825686D912FD /* Pods_Pharmacy.framework */; };
 /* End PBXBuildFile section */
 
@@ -120,6 +129,14 @@
 		C4C7D7A42C4BBA5E00A532C4 /* ItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemView.swift; sourceTree = "<group>"; };
 		C4C7D7A92C4BBE1200A532C4 /* PharmacyRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PharmacyRepository.swift; sourceTree = "<group>"; };
 		C4C7D7AB2C4BBE1E00A532C4 /* APIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIManager.swift; sourceTree = "<group>"; };
+		C4DC03432C4D5BAF00E07B13 /* PharmacyDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PharmacyDetails.swift; sourceTree = "<group>"; };
+		C4DC03462C4D5C3600E07B13 /* PharmacyDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PharmacyDetailsView.swift; sourceTree = "<group>"; };
+		C4DC03482C4D5C4D00E07B13 /* PharmacyDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PharmacyDetailsViewModel.swift; sourceTree = "<group>"; };
+		C4DC034A2C4D732000E07B13 /* ReturnRequestsBottomSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReturnRequestsBottomSheetView.swift; sourceTree = "<group>"; };
+		C4DC034D2C4D7E8900E07B13 /* ItemListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemListView.swift; sourceTree = "<group>"; };
+		C4DC03502C4D7E9B00E07B13 /* ItemListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemListViewModel.swift; sourceTree = "<group>"; };
+		C4DC03522C4D967C00E07B13 /* BottomItemsSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomItemsSheet.swift; sourceTree = "<group>"; };
+		C4DC03562C4E167600E07B13 /* UpdateItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateItemView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -128,6 +145,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F4CC495454DFC5D5806E55D7 /* Pods_Pharmacy.framework in Frameworks */,
+				C40A0CE32C4D21F500D65065 /* BottomSheet in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -170,7 +188,9 @@
 			children = (
 				C4B1E9352C4C704800851589 /* AlertToast */,
 				C4B1E9102C4C046C00851589 /* KFAnimatedImage.swift */,
+				C4DC034A2C4D732000E07B13 /* ReturnRequestsBottomSheetView.swift */,
 				C4B1E92C2C4C4D0800851589 /* BottomSheetView.swift */,
+				C4DC03522C4D967C00E07B13 /* BottomItemsSheet.swift */,
 			);
 			path = CustomViews;
 			sourceTree = "<group>";
@@ -281,10 +301,12 @@
 				C4C7D7A72C4BBDD600A532C4 /* Api */,
 				C4C7D7912C4BB82300A532C4 /* LoginView */,
 				C4B1E91C2C4C28C100851589 /* PharmacyListView */,
+				C4DC03452C4D5C1500E07B13 /* PharmacyDetailsView */,
 				C4B1E9242C4C379500851589 /* WholesalersView */,
 				C4B1E91B2C4C1D5900851589 /* CreateReturnRequestView */,
 				C4B1E92E2C4C649500851589 /* ListReturnRequests */,
 				C4C7D7962C4BB92D00A532C4 /* ReturnRequestView */,
+				C4DC034C2C4D7E7300E07B13 /* ItemListView */,
 				C4C7D7992C4BB96D00A532C4 /* ItemView */,
 				C4C7D75E2C4BB6E300A532C4 /* PharmacyApp.swift */,
 				C4C7D7602C4BB6E300A532C4 /* ContentView.swift */,
@@ -331,6 +353,7 @@
 				C4B1E9072C4BF59B00851589 /* Wholesaler.swift */,
 				C4B1E90B2C4C01E700851589 /* LoginResponse.swift */,
 				C4B1E90D2C4C024600851589 /* UserInfo.swift */,
+				C4DC03432C4D5BAF00E07B13 /* PharmacyDetails.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -359,6 +382,7 @@
 				C4C7D79A2C4BB98100A532C4 /* ItemViewModel.swift */,
 				C4C7D7A22C4BBA3500A532C4 /* AddItemView.swift */,
 				C4C7D7A42C4BBA5E00A532C4 /* ItemView.swift */,
+				C4DC03562C4E167600E07B13 /* UpdateItemView.swift */,
 			);
 			path = ItemView;
 			sourceTree = "<group>";
@@ -387,6 +411,24 @@
 			path = libs;
 			sourceTree = "<group>";
 		};
+		C4DC03452C4D5C1500E07B13 /* PharmacyDetailsView */ = {
+			isa = PBXGroup;
+			children = (
+				C4DC03462C4D5C3600E07B13 /* PharmacyDetailsView.swift */,
+				C4DC03482C4D5C4D00E07B13 /* PharmacyDetailsViewModel.swift */,
+			);
+			path = PharmacyDetailsView;
+			sourceTree = "<group>";
+		};
+		C4DC034C2C4D7E7300E07B13 /* ItemListView */ = {
+			isa = PBXGroup;
+			children = (
+				C4DC034D2C4D7E8900E07B13 /* ItemListView.swift */,
+				C4DC03502C4D7E9B00E07B13 /* ItemListViewModel.swift */,
+			);
+			path = ItemListView;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -406,6 +448,7 @@
 			);
 			name = Pharmacy;
 			packageProductDependencies = (
+				C40A0CE22C4D21F500D65065 /* BottomSheet */,
 			);
 			productName = Pharmacy;
 			productReference = C4C7D75B2C4BB6E300A532C4 /* Pharmacy.app */;
@@ -480,6 +523,7 @@
 			);
 			mainGroup = C4C7D7522C4BB6E300A532C4;
 			packageReferences = (
+				C40A0CE12C4D21F500D65065 /* XCRemoteSwiftPackageReference "bottom-sheet" */,
 			);
 			productRefGroup = C4C7D75C2C4BB6E300A532C4 /* Products */;
 			projectDirPath = "";
@@ -571,6 +615,7 @@
 				C4B1E90A2C4BF9A200851589 /* CreateReturnRequestViewModel.swift in Sources */,
 				C4C7D7AC2C4BBE1E00A532C4 /* APIManager.swift in Sources */,
 				C4B1E9232C4C2F7100851589 /* PharmacyRowView.swift in Sources */,
+				C4DC034B2C4D732000E07B13 /* ReturnRequestsBottomSheetView.swift in Sources */,
 				C4B1E9282C4C37D600851589 /* WholesalersViewModel.swift in Sources */,
 				C4B1E9392C4C707600851589 /* BlurView.swift in Sources */,
 				C4C7D7612C4BB6E300A532C4 /* ContentView.swift in Sources */,
@@ -578,14 +623,19 @@
 				C4B1E9262C4C37B800851589 /* WholesalersView.swift in Sources */,
 				C4C7D78E2C4BB7CD00A532C4 /* ReturnRequest.swift in Sources */,
 				C4B1E92D2C4C4D0800851589 /* BottomSheetView.swift in Sources */,
+				C4DC034E2C4D7E8900E07B13 /* ItemListView.swift in Sources */,
 				C4C7D75F2C4BB6E300A532C4 /* PharmacyApp.swift in Sources */,
 				C4C7D78C2C4BB7AC00A532C4 /* Pharmacy.swift in Sources */,
 				C4B1E90C2C4C01E700851589 /* LoginResponse.swift in Sources */,
 				C4B1E91E2C4C28D900851589 /* PharmacyListViewModel.swift in Sources */,
+				C4DC03492C4D5C4D00E07B13 /* PharmacyDetailsViewModel.swift in Sources */,
 				C4C7D7A32C4BBA3500A532C4 /* AddItemView.swift in Sources */,
 				C4B1E90E2C4C024600851589 /* UserInfo.swift in Sources */,
+				C4DC03532C4D967C00E07B13 /* BottomItemsSheet.swift in Sources */,
+				C4DC03572C4E167600E07B13 /* UpdateItemView.swift in Sources */,
 				C4C7D79F2C4BB9D800A532C4 /* ReturnRequestView.swift in Sources */,
 				C4C7D7982C4BB94700A532C4 /* ReturnRequestViewModel.swift in Sources */,
+				C4DC03512C4D7E9B00E07B13 /* ItemListViewModel.swift in Sources */,
 				C4B1E92B2C4C400500851589 /* WholesalerRowView.swift in Sources */,
 				C4C7D79B2C4BB98100A532C4 /* ItemViewModel.swift in Sources */,
 				C4B1E9322C4C64B200851589 /* ListReturnRequestsView.swift in Sources */,
@@ -595,11 +645,13 @@
 				C4C7D7AA2C4BBE1200A532C4 /* PharmacyRepository.swift in Sources */,
 				C4B1E9342C4C64C100851589 /* ListReturnRequestsRow.swift in Sources */,
 				C4C7D7A12C4BBA1500A532C4 /* CreateReturnRequestView.swift in Sources */,
+				C4DC03442C4D5BAF00E07B13 /* PharmacyDetails.swift in Sources */,
 				C4B1E9182C4C099800851589 /* SplashView.swift in Sources */,
 				C4C7D78A2C4BB78000A532C4 /* User.swift in Sources */,
 				C4B1E91A2C4C0DEE00851589 /* Extensions.swift in Sources */,
 				C4B1E9202C4C28E300851589 /* PharmacyListView.swift in Sources */,
 				C4C7D79D2C4BB9AF00A532C4 /* LoginView.swift in Sources */,
+				C4DC03472C4D5C3600E07B13 /* PharmacyDetailsView.swift in Sources */,
 				C4B1E9142C4C052B00851589 /* Constants.swift in Sources */,
 				C4B1E9082C4BF59B00851589 /* Wholesaler.swift in Sources */,
 				C4C7D7932C4BB8EB00A532C4 /* LoginViewModel.swift in Sources */,
@@ -944,6 +996,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		C40A0CE12C4D21F500D65065 /* XCRemoteSwiftPackageReference "bottom-sheet" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/weitieda/bottom-sheet";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.12;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		C40A0CE22C4D21F500D65065 /* BottomSheet */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C40A0CE12C4D21F500D65065 /* XCRemoteSwiftPackageReference "bottom-sheet" */;
+			productName = BottomSheet;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = C4C7D7532C4BB6E300A532C4 /* Project object */;
 }

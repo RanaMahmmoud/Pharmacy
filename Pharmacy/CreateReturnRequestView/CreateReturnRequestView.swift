@@ -11,6 +11,8 @@ struct CreateReturnRequestView: View {
     @ObservedObject var viewModel: CreateReturnRequestViewModel
     @State private var selectedServiceType = "EXPRESS_SERVICE"
     @State private var selectedWholesaler = 0
+    @EnvironmentObject var WholesalerViewModel :WholesalerViewModel
+    
 
     var body: some View {
         VStack {
@@ -26,7 +28,7 @@ struct CreateReturnRequestView: View {
             .padding()
 
             Picker("Wholesaler", selection: $selectedWholesaler) {
-                ForEach(viewModel.wholesalers, id: \.id) { wholesaler in
+                ForEach(WholesalerViewModel.wholesalers, id: \.id) { wholesaler in
                     Text(wholesaler.name).tag(wholesaler.id)
                 }
             }
@@ -51,6 +53,16 @@ struct CreateReturnRequestView: View {
                     .foregroundColor(.red)
                     .padding()
             }
+        } 
+        .fullScreenCover(isPresented: $viewModel.isPresentedAddItemListView) {
+            AddItemView(
+                viewModel: ItemViewModel(
+                    returnRequestId: viewModel.returnRequest?.id ?? 0,
+                    pharmacyId: viewModel.returnRequest?.pharmacy?.id ?? 0,
+                    authToken: viewModel.authToken
+                ),
+                showModal: $viewModel.isPresentedAddItemListView
+            )
         }
         .toast(isPresenting: $viewModel.isCreated) {
             AlertToast(type: .complete(Color.green) , title: "Success")

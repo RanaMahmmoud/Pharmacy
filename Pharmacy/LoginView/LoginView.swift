@@ -9,14 +9,19 @@ import SwiftUI
 
 struct LoginView: View {
     @ObservedObject var viewModel: LoginViewModel
-    @State var visible = false
-    @State var color = Color.black.opacity(0.7)
-    @State var title = "Error"
-    
+    @State private var visible = false
+    @State private var color = Color.black.opacity(0.7)
+    @State private var title = "Error"
+    @FocusState private var focusedField: Field?
+
+    enum Field {
+        case username
+        case password
+    }
+
     var body: some View {
-       
-         
-            VStack {
+        ScrollView {
+            LazyVStack {
                 Image("pharma")
                     .resizable()
                     .frame(width: 300.0, height: 255.0, alignment: .top)
@@ -31,23 +36,36 @@ struct LoginView: View {
                     .padding()
                     .background(RoundedRectangle(cornerRadius: 6).stroke(Color.gray, lineWidth: 2))
                     .padding(.top, 0)
+                    .focused($focusedField, equals: .username)
+                    .submitLabel(.next)
+                    .onSubmit {
+                        focusedField = .password
+                    }
                 
                 HStack(spacing: 15) {
-                    VStack {
-                        if self.visible {
-                            TextField("Password", text: $viewModel.password)
-                                .autocapitalization(.none)
-                        } else {
-                            SecureField("Password", text: $viewModel.password)
-                                .autocapitalization(.none)
-                        }
+                    if visible {
+                        TextField("Password", text: $viewModel.password)
+                            .autocapitalization(.none)
+                            .focused($focusedField, equals: .password)
+                            .submitLabel(.done)
+                            .onSubmit {
+                                viewModel.login()
+                            }
+                    } else {
+                        SecureField("Password", text: $viewModel.password)
+                            .autocapitalization(.none)
+                            .focused($focusedField, equals: .password)
+                            .submitLabel(.done)
+                            .onSubmit {
+                                viewModel.login()
+                            }
                     }
                     
                     Button(action: {
-                        self.visible.toggle()
+                        visible.toggle()
                     }) {
-                        Image(systemName: self.visible ? "eye.slash.fill" : "eye.fill")
-                            .foregroundColor(self.color)
+                        Image(systemName: visible ? "eye.slash.fill" : "eye.fill")
+                            .foregroundColor(color)
                             .opacity(0.8)
                     }
                 }
@@ -72,25 +90,24 @@ struct LoginView: View {
                     set: { _ in viewModel.errorMessage = "" }
                 )) {
                     Alert(
-                        title: Text(self.title),
+                        title: Text(title),
                         message: Text(viewModel.errorMessage),
                         dismissButton: .default(Text("OK").fontWeight(.semibold))
                     )
                 }
+                
                 if viewModel.isLoading {
-                           ProgressView()
-                               .progressViewStyle(CircularProgressViewStyle())
-                               .padding(.top, 15)
-                       }
+                    ProgressView()
+                        .progressViewStyle(CircularProgressViewStyle())
+                        .padding(.top, 15)
+                }
             }
-            .padding()
-            .fullScreenCover(isPresented: $viewModel.isLoggedIn) {
-                PharmacyListView(viewModel: PharmacyListViewModel()).environmentObject(viewModel)
-            }
-        
-         
         }
-    
+        .padding()
+        .fullScreenCover(isPresented: $viewModel.isLoggedIn) {
+            PharmacyListView(viewModel: PharmacyListViewModel()).environmentObject(viewModel)
+        }
+    }
 }
 
 struct LoginView_Previews: PreviewProvider {

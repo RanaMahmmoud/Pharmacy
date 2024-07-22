@@ -1,17 +1,16 @@
 //
-//  BottomSheetView.swift
+//  ReturnRequestsBottomSheetView.swift
 //  Pharmacy
 //
-//  Created by Rana Mahmoud on 20/07/2024.
+//  Created by Rana Mahmoud on 21/07/2024.
 //
 
 import SwiftUI
 
-struct BottomSheetView: View {
+struct ReturnRequestsBottomSheetView: View {
     @Binding var showBottomSheet: Bool
-    @Binding var destination: PharmacyListView.Destination?
     @Binding var isPresentedWholesalerListView:Bool
-    @Binding var isPresentedListReturnRequestsView:Bool
+    @Binding var isPresentedListItemsRequestsView:Bool
     @Binding var isPresentedReturnRequestView:Bool
 
     
@@ -21,9 +20,10 @@ struct BottomSheetView: View {
             
             VStack(spacing: 20) {
                 Button(action: {
-                    destination = .wholesalers
                     showBottomSheet = false
                     isPresentedWholesalerListView = true
+                    isPresentedListItemsRequestsView = false
+                    isPresentedReturnRequestView = false
                 }) {
                     HStack {
                         Image(systemName: "list.bullet")
@@ -37,13 +37,14 @@ struct BottomSheetView: View {
                 }
                 
                 Button(action: {
-                    destination = .returnRequests
                     showBottomSheet = false
+                    isPresentedWholesalerListView = false
+                    isPresentedListItemsRequestsView = false
                     isPresentedReturnRequestView = true
                 }) {
                     HStack {
                         Image(systemName: "info.circle")
-                        Text("Show Pharmacy Details")
+                        Text("Show Retun Request Details")
                     }
                     .frame(maxWidth: .infinity)
                     .padding()
@@ -52,13 +53,14 @@ struct BottomSheetView: View {
                     .cornerRadius(10)
                 }
                 Button(action: {
-                    destination = .returnRequests
                     showBottomSheet = false
-                    isPresentedListReturnRequestsView = true
+                    isPresentedWholesalerListView = false
+                    isPresentedListItemsRequestsView = true
+                    isPresentedReturnRequestView = false
                 }) {
                     HStack {
                         Image(systemName: "list.bullet")
-                        Text("Show List Return Requests")
+                        Text("Show Items List")
                     }
                     .frame(maxWidth: .infinity)
                     .padding()
@@ -93,27 +95,4 @@ struct BottomSheetView: View {
     }
     
 }
-
-struct PrimaryButtonStyle: ButtonStyle {
-    func makeBody(configuration: Configuration) -> some View {
-        configuration.label
-            .foregroundColor(.white)
-            .padding()
-            .frame(maxWidth: .infinity)
-            .background(Color.blue)
-            .cornerRadius(10)
-    }
-}
-
-struct CancelButtonStyle: ButtonStyle {
-    func makeBody(configuration: Configuration) -> some View {
-        configuration.label
-            .foregroundColor(.black)
-            .padding()
-            .frame(maxWidth: .infinity)
-            .background(Color.gray)
-            .cornerRadius(10)
-    }
-}
-
 

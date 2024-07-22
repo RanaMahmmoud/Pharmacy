@@ -15,6 +15,7 @@ class PharmacyListViewModel: ObservableObject {
     @Published var pharmacies: [Pharmacy] = []
     @Published var isLoading = false
     @Published var errorMessage = ""
+    @Published var selectedParamacy:Pharmacy?
 
     func fetchPharmacies(authToken: String) {
         self.isLoading = true

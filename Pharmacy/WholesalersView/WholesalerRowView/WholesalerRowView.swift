@@ -6,12 +6,13 @@
 //
 
 import SwiftUI
+import BottomSheet
 
 struct WholesalerRowView: View {
     var wholesaler: Wholesaler
     @ObservedObject var viewModel: WholesalerViewModel
     @ObservedObject var loginViewModel: LoginViewModel
-    @State private var showCreateReturnRequest = false
+    @Binding var showCreateReturnRequest:Bool
     var pharmacyId: Int
 
     var body: some View {
@@ -65,9 +66,6 @@ struct WholesalerRowView: View {
         .cornerRadius(10)
         .shadow(radius: 5)
         .padding(.horizontal)
-        .sheet(isPresented: $showCreateReturnRequest) {
-            CreateReturnRequestView(viewModel: CreateReturnRequestViewModel(authToken: loginViewModel.authToken, pharmacyId: pharmacyId))
-                        .environmentObject(loginViewModel)
-        }
+       
     }
 }

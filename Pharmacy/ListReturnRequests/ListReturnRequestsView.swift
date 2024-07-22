@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import BottomSheet
 
 struct ListReturnRequestsView: View {
     @ObservedObject var viewModel: ListReturnRequestsViewModel
@@ -13,11 +14,39 @@ struct ListReturnRequestsView: View {
     let pharmacyId: Int
     @State private var showReturnRequest = false
     @State private var selectedRequest:ReturnRequestData?
+    @Binding var showModal: Bool
+    @State private var isPresentedWholesalerListView: Bool = false
+    @State private var isPresentedListItemsRequestsView: Bool = false
+    @State private var isPresentedReturnRequestView: Bool = false
+    @State private var showRequestBottomSheet = false
+    
+    
     var body: some View {
-        NavigationView {
             VStack {
+                HStack {
+                    Button {
+                        showModal.toggle()
+                    } label: {
+                        Image(systemName: "chevron.left")
+                    }
+                    HStack {
+                        Spacer()
+                        
+                        Text("Return Requests")
+                            .font(.system(size: 18, weight: .bold))
+                        
+                        Spacer()
+                        
+                    }
+                    Spacer()
+                }.padding(.vertical,25)
+                    .padding(.leading,25)
+                
+                
                 if viewModel.isLoading {
+                    Spacer()
                     ProgressView("Loading Return Requests...")
+                    Spacer()
                 } else if !viewModel.errorMessage.isEmpty {
                     Text(viewModel.errorMessage)
                         .foregroundColor(.red)
@@ -27,12 +56,13 @@ struct ListReturnRequestsView: View {
                         VStack(spacing: 15) {
                             ForEach(viewModel.returnRequests) { returnRequest in
                                 if let requestData = returnRequest.returnRequest {
-                                    ListReturnRequestsRow(returnRequest: requestData)
+                                    ListReturnRequestsRow(returnRequest: requestData, itemsNumber: returnRequest.numberOfItems ?? 0)
                                         .onTapGesture {
                                             
                                         selectedRequest = requestData
-                                      
-                                        showReturnRequest = true
+                                        showRequestBottomSheet = true
+                                        viewModel.selectedPharamcyId = requestData.pharmacy?.id ?? 0
+                                        viewModel.selectedRequestId = requestData.id ?? 0
                                        
                                     }
 
@@ -42,20 +72,34 @@ struct ListReturnRequestsView: View {
                         .padding(.horizontal)
                     }
                 }
+                Spacer()
+            }  .onAppear {
+                viewModel.fetchReturnRequests(authToken: loginViewModel.authToken, pharmacyId: pharmacyId)
             }
-            .navigationTitle("Return Requests")
+            .bottomSheet(isPresented: $showRequestBottomSheet, height: 300) {
+                if(showRequestBottomSheet){
+                    ReturnRequestsBottomSheetView(showBottomSheet: $showRequestBottomSheet ,isPresentedWholesalerListView: $isPresentedWholesalerListView,isPresentedListItemsRequestsView: $isPresentedListItemsRequestsView, isPresentedReturnRequestView: $isPresentedReturnRequestView)
+                }
+          }
+        
+            .bottomSheet(isPresented: $isPresentedReturnRequestView, height: 230) {
+    
+                if(isPresentedReturnRequestView){
+                    ReturnRequestView(viewModel: ReturnRequestViewModel(), pharmacyId: viewModel.selectedPharamcyId, requestId:  viewModel.selectedRequestId ,authToken: loginViewModel.authToken)
+                    
+                }
+            }
+            .fullScreenCover(isPresented: $isPresentedWholesalerListView, content: {
             
-            .sheet(isPresented: $showReturnRequest) {
-             if let data = selectedRequest
-                {
-                 ReturnRequestView(viewModel: ReturnRequestViewModel(), pharmacyId: pharmacyId, requestId:  data.id ?? 0 ,authToken: loginViewModel.authToken)
-
-                 
-             }
-            }
-        }.onAppear {
-            viewModel.fetchReturnRequests(authToken: loginViewModel.authToken, pharmacyId: pharmacyId)
-        }
+                    WholesalerListView(viewModel: WholesalerViewModel(), pharmacyId: viewModel.selectedPharamcyId,showModal: $isPresentedWholesalerListView)
+                        .environmentObject(loginViewModel)
+                
+            })
+            .fullScreenCover(isPresented: $isPresentedListItemsRequestsView, content: {
+             
+                ItemListView(viewModel: ItemListViewModel(selectedRequestId:viewModel.selectedRequestId  ,selectedPharamcyId:viewModel.selectedPharamcyId ), showModal: $isPresentedListItemsRequestsView)
+                    .environmentObject(loginViewModel)
+            })
     }
 }
 

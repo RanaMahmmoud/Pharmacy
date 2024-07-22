@@ -14,6 +14,8 @@ class CreateReturnRequestViewModel: ObservableObject {
     @Published var successMessage: String?
     @Published var isCreated: Bool = false
     @Published var isFailed: Bool = false
+    @Published var isPresentedAddItemListView: Bool = false
+    @Published var returnRequest: ReturnRequest?
     let authToken: String
     let pharmacyId: Int
 
@@ -42,8 +44,11 @@ class CreateReturnRequestViewModel: ObservableObject {
                 self?.errorMessage = error.localizedDescription
                 self?.isFailed = true
             }else{
+                self?.returnRequest = returnRequest
                 self?.successMessage = "Successfully create a return request!"
                 self?.isCreated = true
+                self?.isPresentedAddItemListView = true
+
                 print("Return Request Created: \(returnRequest)")
             }
             
