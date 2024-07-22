@@ -13,9 +13,19 @@ This is a platform where a user owns a pharmacy and creates return requests for 
 - Splash Screen
 - Login Screen
 - Pharmacies List Screen
-  - Menu options:
+  - Menu options: show up when pressing on row
     - List Wholesalers for Pharmacy
     - List Return Requests
     - Cancel
 - Create Return Request
-- Get Return Request
+- Get Return Requests
+  Menu options: show up when pressing on row
+  -Update Item
+  -Delete Item
+-Get Return Request Details
+-Get Items
+-Get Item Details
+-Add Item
+-Update Item
+-Delete Item
+
