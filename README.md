@@ -19,7 +19,7 @@ This is a platform where a user owns a pharmacy and creates return requests for 
     - Cancel
 - Create Return Request
 - Get Return Requests
-  Menu options: show up when pressing on row
+  -Menu options: show up when pressing on row
   -Update Item
   -Delete Item
 -Get Return Request Details
